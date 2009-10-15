@@ -47,6 +47,10 @@
 
 // *************************************************************************
 
+using std::strlen;
+using std::strcpy;
+using std::strcmp;
+
 class ScXMLEvaluator::PImpl {
 public:
 };
@@ -159,6 +163,14 @@ void
 ScXMLDataObj::initClass(void)
 {
   SCXML_OBJECT_INIT_ABSTRACT_CLASS(ScXMLDataObj, ScXMLObject, "ScXMLObject");
+}
+
+void
+ScXMLDataObj::setContainer(ScXMLObject * container) {
+  if (this->container) {
+    delete container;
+  }
+  this->container = container;
 }
 
 void
