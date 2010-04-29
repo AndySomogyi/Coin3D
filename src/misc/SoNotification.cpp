@@ -39,15 +39,12 @@
 /*!
   Initialize list.
 */
-SoNotList::SoNotList(void)
-{
-  this->head = this->tail = NULL;
-  this->firstnoderec = NULL;
-  this->lastfield = NULL;
-  this->lastengine = NULL;
+SoNotList::SoNotList(void) :
+  head(NULL), tail(NULL), firstnoderec(NULL), lastfield(NULL), lastengine(NULL),
   // this is used in SoNode::notify() to stop a notification
   // when a node has already been notified.
-  this->stamp = SoNode::getNextNodeId();
+  stamp(SoNode::getNextNodeId())
+{
 }
 
 /*!
@@ -82,8 +79,8 @@ SoNotList::append(SoNotRec * const rec)
   rec->setPrevious(this->tail);
   this->tail = rec;
   if (!this->head) this->head = rec;
-  
-  if (!this->firstnoderec && rec->getBase() && rec->getBase()->isOfType(SoNode::getClassTypeId())) 
+
+  if (!this->firstnoderec && rec->getBase() && rec->getBase()->isOfType(SoNode::getClassTypeId()))
     this->firstnoderec = rec;
 }
 

@@ -63,6 +63,11 @@ protected:
   virtual void allocValues(int num);
 #endif // DOXYGEN_SKIP_THIS
 
+  virtual SoNotRec createNotRec(SoBase * container);
+
+  void setChangedIndex(const int chgidx);
+  void setChangedIndices(const int chgidx = -1, const int numchgind = 0);
+
   int num;
   int maxNum;
   SbBool userDataIsUsed;
@@ -79,6 +84,7 @@ private:
   virtual int getNumValuesPerLine(void) const;
 
   static SoType classTypeId;
+  int changedIndex, numChangedIndices;
 };
 
 // inline methods

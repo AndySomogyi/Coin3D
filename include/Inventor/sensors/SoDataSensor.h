@@ -25,6 +25,7 @@
 \**************************************************************************/
 
 #include <Inventor/sensors/SoDelayQueueSensor.h>
+#include <Inventor/misc/SoNotRec.h>
 #include <stdlib.h> // for NULL definition
 
 class SoNode;
@@ -46,6 +47,11 @@ public:
   SoPath * getTriggerPath(void) const;
   void setTriggerPathFlag(SbBool flag);
   SbBool getTriggerPathFlag(void) const;
+  SoNotRec::OperationType getTriggerOperationType(void) const;
+  int getTriggerIndex(void) const;
+  int getTriggerFieldNumIndices(void) const;
+  SoNode * getTriggerGroupChild(void) const;
+  SoNode * getTriggerReplacedGroupChild(void) const;
 
   virtual void trigger(void);
   virtual void notify(SoNotList * l);
@@ -61,6 +67,10 @@ private:
   SoField * triggerfield;
   SoNode * triggernode;
   SoPath * triggerpath;
+  SoNotRec::OperationType triggeroperationtype;
+  int triggerindex, triggerfieldnumindices;
+  SoNode * triggergroupchild;
+  SoNode * triggergroupprevchild;
 };
 
 #endif // !COIN_SODATASENSOR_H

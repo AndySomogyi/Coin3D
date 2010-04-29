@@ -37,6 +37,13 @@
   within the record.
 */
 
+/*!
+  \enum SoNotRec::OperationType
+
+  This enum is used to specify the type of the scenegraph operation
+  causing the notification.
+*/
+
 #include <Inventor/misc/SoNotRec.h>
 #include <Inventor/errors/SoDebugError.h>
 #include <assert.h>
@@ -50,8 +57,9 @@
 /*!
   Constructor. Initializes the record with \a notifbase pointer.
 */
-SoNotRec::SoNotRec(SoBase * const notifbase)
-  : type((SoNotRec::Type)-1), base(notifbase), prev(NULL)
+SoNotRec::SoNotRec(SoBase * const notifbase) :
+  type((SoNotRec::Type)-1), base(notifbase), prev(NULL), index(-1),
+  fieldNumIndices(0), operationType(UNSPECIFIED), groupChild(NULL), groupPrevChild(NULL)
 {
 }
 
@@ -134,4 +142,64 @@ SoNotRec::print(FILE * const file) const
     (void)fprintf(file," base is NULL\n");
   }
 #endif // COIN_DEBUG
+}
+
+SoNotRec::OperationType
+SoNotRec::getOperationType(void) const
+{
+  return operationType;
+}
+
+int
+SoNotRec::getIndex(void) const
+{
+  return index;
+}
+
+int
+SoNotRec::getFieldNumIndices(void) const
+{
+  return fieldNumIndices;
+}
+
+const SoBase * const
+SoNotRec::getGroupChild(void) const
+{
+  return groupChild;
+}
+
+const SoBase * const
+SoNotRec::getGroupPrevChild(void) const
+{
+  return groupPrevChild;
+}
+
+void
+SoNotRec::setOperationType(const SoNotRec::OperationType opType)
+{
+  this->operationType = opType;
+}
+
+void
+SoNotRec::setIndex(const int idx)
+{
+  this->index = idx;
+}
+
+void
+SoNotRec::setFieldNumIndices(const int fldnumind)
+{
+  this->fieldNumIndices = fldnumind;
+}
+
+void
+SoNotRec::setGroupChild(const SoBase * const gc)
+{
+  this->groupChild = gc;
+}
+
+void
+SoNotRec::setGroupPrevChild(const SoBase * const pc)
+{
+  this->groupPrevChild = pc;
 }

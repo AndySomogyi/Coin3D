@@ -145,6 +145,8 @@ protected:
 
   SbBool isDestructing(void) const;
 
+  virtual SoNotRec createNotRec(SoBase * cont);
+
 private:
 
   enum FieldFlags {

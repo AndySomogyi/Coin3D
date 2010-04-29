@@ -1489,9 +1489,9 @@ SoField::notify(SoNotList * nlist)
   if (nlist->getFirstRec()) this->setDirty(TRUE);
 
   if (this->isNotifyEnabled()) {
-    SoFieldContainer * container = this->getContainer();
+    SoFieldContainer * cont = this->getContainer();
     this->setStatusBits(FLAG_ISNOTIFIED);
-    SoNotRec rec(container);
+    SoNotRec rec(createNotRec(cont));
     nlist->append(&rec, this);
     nlist->setLastType(SoNotRec::CONTAINER); // FIXME: Not sure about this. 20000304 mortene.
 
@@ -1506,11 +1506,11 @@ SoField::notify(SoNotList * nlist)
     if (this->hasExtendedStorage() && this->storage->auditors.getLength()) {
       // need to copy list first if we're going to notify the auditors
       SoNotList listcopy(*nlist);
-      if (container) container->notify(nlist);
+      if (cont) cont->notify(nlist);
       this->notifyAuditors(&listcopy);
     }
     else {
-      if (container) container->notify(nlist);
+      if (cont) cont->notify(nlist);
     }
     this->clearStatusBits(FLAG_ISNOTIFIED);
   }
@@ -2551,6 +2551,17 @@ SbBool
 SoField::isDestructing(void) const
 {
   return this->getStatus(FLAG_ISDESTRUCTING);
+}
+
+/*!
+  \internal
+*/
+SoNotRec
+SoField::createNotRec(SoBase * cont)
+{
+  SoNotRec rec(cont);
+  rec.setOperationType(SoNotRec::FIELD_UPDATE);
+  return rec;
 }
 
 /*!
